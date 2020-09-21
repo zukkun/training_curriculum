@@ -7,7 +7,7 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    binding.pry
+    #binding.pry
     Plan.create(plan_params)
     redirect_to action: :index
   end
@@ -15,10 +15,11 @@ class CalendarsController < ApplicationController
   private
 
   def plan_params
-    params.require(:calendars).permit(:date, :plan)
+    #params.require(:calendars).permit(:date, :plan)
+    params.require(:plan).permit(:date, :plan)
   end
 
-  def get_Week
+  def get_week
     wdays = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)']
 
  
