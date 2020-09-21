@@ -2,7 +2,7 @@ class CalendarsController < ApplicationController
 
 
   def index
-    get_Week
+    get_week
     @plan = Plan.new
   end
 
