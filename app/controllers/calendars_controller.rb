@@ -4,24 +4,27 @@ class CalendarsController < ApplicationController
   def index
     get_week
     @plan = Plan.new
+    @week = get_week
+    
   end
 
   def create
-    #binding.pry
     Plan.create(plan_params)
     redirect_to action: :index
   end
 
   private
 
+
+  
+
   def plan_params
-    #params.require(:calendars).permit(:date, :plan)
-    params.require(:plan).permit(:date, :plan)
+    params.require(:plan,:date).permit(:date, :plan )
   end
 
   def get_week
-    wdays = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)']
-
+    @wdays = ['(日)','(月)','(火)','(水)','(木)','(金)','(土)']
+  
  
     @todays_date = Date.today
  
@@ -35,12 +38,14 @@ class CalendarsController < ApplicationController
       plan = plans.map do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      wday_num = Date.today.wday.size
+
+      wday_num = @todays_date,@wdays
+      
       if wday_num > 7
         wday_num = wday_num - 7
       end
       wdays_size = wdays.size
-      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday: wdays[0..wdays_size]}
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday:(@todays_date+x)}
       @week_days.push(days)
     end
 
